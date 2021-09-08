@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class TestStepsDefinition {
@@ -26,7 +27,11 @@ public class TestStepsDefinition {
     }
     @When("A valid email address is entered in the Create an account section")
     public void a_valid_email_address_is_entered_in_the_create_an_account_section() {
-        driver.findElement(By.xpath("//input[@name=\"email_create\"]")).sendKeys("example_email_123@gmail.com");
+        // A random email suffix is generated each time this step is executed in order to avoid
+        // "An account using this email address has already been registered" error in care of multiple executions
+        Random rand = new Random();
+        String emailSuffix = String.valueOf(rand.nextInt(10000));
+        driver.findElement(By.xpath("//input[@name=\"email_create\"]")).sendKeys("example_email_" + emailSuffix + "@gmail.com");
     }
     @When("Create an account button is pressed")
     public void create_an_account_button_is_pressed() {
